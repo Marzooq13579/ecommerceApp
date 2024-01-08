@@ -18,6 +18,7 @@ npm start
 # Start the React frontend
 cd ../frontend
 npm start
+```
 
 The Strapi server will be running on http://localhost:1337, and the React app will be accessible at http://localhost:3000.
 
