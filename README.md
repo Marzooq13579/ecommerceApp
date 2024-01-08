@@ -20,8 +20,8 @@ cd ../frontend
 npm start
 ```
 
-The Strapi server will be running on http://localhost:1337, and the React app will be accessible at http://localhost:3000.
+The Strapi server will be running on http://localhost:1337, and the React app will be accessible at http://localhost:5173.
 
 Configure Stripe by creating an account and obtaining API keys. Update the Stripe configuration in the frontend code.
 
-Explore the application by navigating to http://localhost:3000 in your browser.
+Explore the application by navigating to http://localhost:5173 in your browser.
