@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import "./FeaturedProducts.scss";
+import axios from "axios";
 // import useFetch from "../../hooks/useFetch";
 
 const FeaturedProducts = ({ type }) => {
-//   const { data, loading, error } = useFetch(
-//     `/products?populate=*&[filters][type][$eq]=${type}`
-//   );
+  //   const { data, loading, error } = useFetch(
+  //     `/products?populate=*&[filters][type][$eq]=${type}`
+  //   );
 
-  const data = [], loading = false, error = false;
+  const [data, setData] = useState([]);
+
+  const loading = false,
+    error = false;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          import.meta.env.VITE_API_URL + "/products?populate=*",
+          {
+            headers: {
+              Authorization: "Bearer " + import.meta.env.VITE_API_TOKEN,
+            },
+          }
+        );
+        setData(res.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="featuredProducts">
