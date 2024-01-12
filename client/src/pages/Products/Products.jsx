@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Products.scss";
 import List from "../../components/List/List";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 const Products = () => {
   const catId = +useParams().id; //another convention to typecast string to a number
@@ -10,23 +11,42 @@ const Products = () => {
 
   const [sort, setSort] = useState(null);
 
+  const [selectedSubCats, setSelectedSubCats] = useState([]);
+
+  const { data, loading, error } = useFetch(
+    `/sub-categories?[filter][categories][id][$eq]=${catId}`
+  );
+
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const isChecked = e.target.checked;
+
+    setSelectedSubCats(
+      isChecked
+        ? [...selectedSubCats, value]
+        : selectedSubCats.filter((item) => item !== value)
+    );
+  };
+
+  console.log("selected sub cats",selectedSubCats)
+
   return (
     <div className="products">
       <div className="left">
         <div className="filterItem">
           <h2>Product Categories</h2>
-          <div className="inputItem">
-            <input type="checkbox" id="1" value={1} />
-            <label htmlFor="1">Shoes</label>
-          </div>
-          <div className="inputItem">
-            <input type="checkbox" id="1" value={2} />
-            <label htmlFor="2">Skirts</label>
-          </div>
-          <div className="inputItem">
-            <input type="checkbox" id="1" value={3} />
-            <label htmlFor="3">Coats</label>
-          </div>
+          {data?.map((item) => (
+            <div className="inputItem" key={item.id}>
+              <input
+                type="checkbox"
+                id={item.id}
+                value={item.id}
+                onChange={handleChange}
+              />
+              <label htmlFor={item.id}>{item.attributes.title}</label>
+            </div>
+          ))}
         </div>
         <div className="filterItem">
           <h2>Filter By price</h2>
@@ -71,7 +91,7 @@ const Products = () => {
           src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt=""
         />
-        <List catId={catId} maxPrice={maxPrice} sort={sort} />
+        <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats} />
       </div>
     </div>
   );
