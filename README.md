@@ -9,15 +9,16 @@ This is an eCommerce project built with React for the front end, Strapi for the 
 ```bash
 git clone https://github.com/your-username/ecommerce-project.git
 cd ecommerce-project
-npm install
 
 # Start the Strapi backend server
 cd backend
-npm start
+npm install
+npm run develop
 
 # Start the React frontend
 cd ../frontend
-npm start
+npm install
+npm run dev
 ```
 
 The Strapi server will be running on http://localhost:1337, and the React app will be accessible at http://localhost:5173.
